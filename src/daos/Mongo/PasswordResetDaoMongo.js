@@ -40,7 +40,7 @@ class PasswordResetDaoMongo {
 async getEmailFromToken(token) {
     try {
     // Buscar el token en la base de datos
-    const tokenData = await tokenModel.findOne(token); 
+    const tokenData = await tokenModel.findOne({token}); 
     console.log("token de la base de dato", tokenData);
     if (!tokenData) {
             throw new Error('Token no encontrado');
