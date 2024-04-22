@@ -38,21 +38,15 @@ class PasswordResetDaoMongo {
     }
     
 async getEmailFromToken(token) {
-    try {
-    // Buscar el token en la base de datos
-    const tokenData = await tokenModel.findOne({token}); 
-    console.log("token de la base de dato", tokenData);
-    if (!tokenData) {
-            throw new Error('Token no encontrado');
-    }
-
-// Retornar el correo electrónico asociado al token
-    return tokenData.userEmail;
-        } catch (error) {
-            throw error;
-        }
-    }
-    
+    try{
+    const decodedToken = jwt.verify(token, jwt_private_key);;
+    const email = decodedToken.email;
+    console.log(("el email del token", email));
+    return email;
+  } catch (error) {
+    throw new Error('Error al extraer el correo electrónico del token en la URL');
+  }
+}
 }
 
 export default PasswordResetDaoMongo

@@ -32,6 +32,7 @@ import { addLogger, logger } from "./utils/logger.js";
 
 
 
+
 const productManager = new ProductsManagerMongo() 
 const messageManager = new MessageManagerMongo();
 const cartManager = new CartManager()
@@ -47,7 +48,8 @@ app.use(express.static(__dirname + "/public"));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
-// app.use(logger("dev"))
+
+// app.use(logger('dev'));
 app.use(cookieParser("palabraparafirmarcookies"))
 
 // //SESSION WITH PASSPORT 

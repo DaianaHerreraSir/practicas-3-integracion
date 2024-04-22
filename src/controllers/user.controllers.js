@@ -2,6 +2,7 @@
 import { CustomError } from "../Errors/CustomError.js";
 import { EErrorrs } from "../Errors/enums.js";
 import { generateUserErrorInfo } from "../Errors/info.js";
+import usersModel from "../daos/Mongo/models/users.model.js";
 import { UserDao } from "../daos/factory.js";
 import { UserDto } from "../dto/userDto.js";
 import userService from "../repository/index.repository.js";

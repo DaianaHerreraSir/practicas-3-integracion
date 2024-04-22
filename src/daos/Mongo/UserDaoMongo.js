@@ -30,6 +30,29 @@ class UserDaoMongo {
           throw error;
         }
       }
+
+      // Función para actualizar la contraseña del usuario por su correo electrónico
+async updatePasswordByEmail(email, newPassword) {
+  try {
+    // Busca al usuario por su correo electrónico
+    const user = await usersModel.findOne({ email });
+
+    // Verifica si el usuario existe
+    if (!user) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    // Actualiza la contraseña del usuario
+    user.password = newPassword;
+    await user.save();
+
+    // Retorna un mensaje de éxito o cualquier otro valor que desees
+    return 'Contraseña actualizada exitosamente';
+  } catch (error) {
+    // Captura cualquier error y devuélvelo
+    throw error;
+  }
+}
     // async updateUser(uid, userToUpdate){
     //     return await usersModel.findByIdAndUpdate({_id: uid}, userToUpdate)
     // }

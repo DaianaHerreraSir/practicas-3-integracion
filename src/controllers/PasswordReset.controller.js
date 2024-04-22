@@ -1,3 +1,4 @@
+
 import { PasswordDao, UserDao } from '../daos/factory.js';
 import { sendMail } from '../utils/sendEmail.js';
 
@@ -13,7 +14,7 @@ requestPasswordReset = async (req, res) => {
   try {
   // Generar el token para restablecer la contraseña
     const token = await this.passResetService.generatePasswordResetToken(email);
-    console.log("El token generado para restablecer la contraseña:", token);
+   console.log("El token generado para restablecer la contraseña:", token);
 
   // Construir la URL para el restablecimiento de contraseña
     const resetPasswordUrl = `http://localhost:8083/updatePassword?token=${token}`;
@@ -31,7 +32,7 @@ requestPasswordReset = async (req, res) => {
   // Enviar respuesta al cliente
     res.status(200).send('Se ha enviado un enlace de restablecimiento de contraseña a tu correo electrónico. Por favor, revisa tu bandeja de entrada.');
   } catch (error) {
-    console.error('Error al solicitar restablecimiento de contraseña:', error);
+console.error('Error al solicitar restablecimiento de contraseña:', error);
     res.status(500).send('Error al solicitar restablecimiento de contraseña');
   }
 }
@@ -39,6 +40,7 @@ requestPasswordReset = async (req, res) => {
 // FUNCION PARA RESTABLECER CONTRASEÑA
 updatePassword = async (req, res) => {
   const { token, newPassword, confirmPassword } = req.body;
+ console.log("el token desde controler", token);
 
 
   // Validar que las contraseñas coincidan
@@ -53,14 +55,14 @@ updatePassword = async (req, res) => {
 
     if (email) {
       // actualizar la contraseña utilizando el email
-    await this.userService.updatePasswordByEmail(email, newPassword);
-      // Enviar respuesta al cliente
-      return res.status(200).json({ message: 'Contraseña restablecida correctamente.' });
-    } else {
-      return res.status(404).json({ message: 'Usuario no encontrado.' });
+      await this.userService.updatePasswordByEmail(email, newPassword)
+   
+      const message = 'Contraseña actualizada correctamente. Haz clic <a href="/login">aquí</a> para volver al login.';
+  
+      res.status(200).send(message);
     }
   } catch (error) {
-    console.error('Error al restablecer la contraseña:', error);
+   console.error('Error al restablecer la contraseña:', error);
     return res.status(500).json({ message: 'Error al restablecer la contraseña.' });
   }
 }
