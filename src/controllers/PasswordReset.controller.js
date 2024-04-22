@@ -1,5 +1,6 @@
 
 import { PasswordDao, UserDao } from '../daos/factory.js';
+import { createHash } from '../utils/hashBcrypt.js';
 import { sendMail } from '../utils/sendEmail.js';
 
 export class PasswordResetController {
@@ -55,8 +56,9 @@ updatePassword = async (req, res) => {
     console.log(`Email obtenido del token: ${email}`);
 
     if (email) {
+      const hashedPassword = createHash(newPassword);
       // actualizar la contraseña utilizando el email
-      await this.userService.updatePasswordByEmail(email, newPassword)
+      await this.userService.updatePasswordByEmail(email, hashedPassword)
    
       const message = 'Contraseña actualizada correctamente. Haz clic <a href="/login">aquí</a> para volver al login.';
   
