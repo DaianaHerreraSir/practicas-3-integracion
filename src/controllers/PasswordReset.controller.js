@@ -11,6 +11,7 @@ export class PasswordResetController {
 requestPasswordReset = async (req, res) => {
   const { email } = req.body;
   console.log("Email del usuario:", email); 
+
   try {
   // Generar el token para restablecer la contraseña
     const token = await this.passResetService.generatePasswordResetToken(email);
